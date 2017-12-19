@@ -115,7 +115,7 @@ public class CarbonLocalInputSplit {
   }
 
   public static  CarbonInputSplit convertSplit(CarbonLocalInputSplit carbonLocalInputSplit) {
-    CarbonInputSplit inputSplit = new CarbonInputSplit(carbonLocalInputSplit.getSegmentId(),
+    CarbonInputSplit inputSplit = new CarbonInputSplit(carbonLocalInputSplit.getSegmentId(), "0",
         new Path(carbonLocalInputSplit.getPath()), carbonLocalInputSplit.getStart(),
         carbonLocalInputSplit.getLength(), carbonLocalInputSplit.getLocations()
         .toArray(new String[carbonLocalInputSplit.getLocations().size()]),

@@ -794,8 +794,8 @@ public class CarbonTableInputFormat<T> extends FileInputFormat<Void, T> {
     }
     org.apache.carbondata.hadoop.CarbonInputSplit split =
         org.apache.carbondata.hadoop.CarbonInputSplit.from(blocklet.getSegmentId(),
-            new FileSplit(new Path(blocklet.getPath()), 0, blocklet.getLength(),
-                blocklet.getLocations()),
+            blocklet.getBlockletId(), new FileSplit(new Path(blocklet.getPath()), 0,
+                blocklet.getLength(), blocklet.getLocations()),
             ColumnarFormatVersion.valueOf((short) blocklet.getDetailInfo().getVersionNumber()));
     split.setDetailInfo(blocklet.getDetailInfo());
     return split;

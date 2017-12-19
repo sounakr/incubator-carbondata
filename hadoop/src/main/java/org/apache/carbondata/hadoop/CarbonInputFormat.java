@@ -409,7 +409,7 @@ public class CarbonInputFormat<T> extends FileInputFormat<Void, T> {
       if (segmentId.equals(CarbonCommonConstants.INVALID_SEGMENT_ID)) {
         continue;
       }
-      carbonSplits.add(CarbonInputSplit.from(segmentId, fileSplit,
+      carbonSplits.add(CarbonInputSplit.from(segmentId, "0", fileSplit,
           ColumnarFormatVersion.valueOf(
               CarbonCommonConstants.CARBON_DATA_FILE_DEFAULT_VERSION)));
     }
@@ -488,10 +488,11 @@ public class CarbonInputFormat<T> extends FileInputFormat<Void, T> {
             throw new IOException(e);
           }
         }
-        result.add(new CarbonInputSplit(segmentNo, new Path(tableBlockInfo.getFilePath()),
-            tableBlockInfo.getBlockOffset(), tableBlockInfo.getBlockLength(),
-            tableBlockInfo.getLocations(), tableBlockInfo.getBlockletInfos().getNoOfBlockLets(),
-            tableBlockInfo.getVersion(), deleteDeltaFilePath));
+        result.add(new CarbonInputSplit(segmentNo, tableBlockInfo.getBlockletId(),
+            new Path(tableBlockInfo.getFilePath()), tableBlockInfo.getBlockOffset(),
+            tableBlockInfo.getBlockLength(), tableBlockInfo.getLocations(),
+            tableBlockInfo.getBlockletInfos().getNoOfBlockLets(), tableBlockInfo.getVersion(),
+            deleteDeltaFilePath));
       }
     }
     return result;
@@ -603,7 +604,8 @@ public class CarbonInputFormat<T> extends FileInputFormat<Void, T> {
         BlockletInfos blockletInfos = new BlockletInfos(carbonInputSplit.getNumberOfBlocklets(), 0,
             carbonInputSplit.getNumberOfBlocklets());
         tableBlockInfoList.add(
-            new TableBlockInfo(carbonInputSplit.getPath().toString(), carbonInputSplit.getStart(),
+            new TableBlockInfo(carbonInputSplit.getPath().toString(),
+                carbonInputSplit.getBlockletId(), carbonInputSplit.getStart(),
                 tableSegmentUniqueIdentifier.getSegmentId(), carbonInputSplit.getLocations(),
                 carbonInputSplit.getLength(), blockletInfos, carbonInputSplit.getVersion(),
                 carbonInputSplit.getBlockStorageIdMap(), carbonInputSplit.getDeleteDeltaFiles()));
