@@ -331,8 +331,7 @@ class CarbonSqlAstBuilder(conf: SQLConf, parser: CarbonSpark2SqlParser, sparkSes
         tablePropertyList = ctx.tablePropertyList,
         locationSpecContext = ctx.locationSpec(),
         tableComment = Option(ctx.STRING()).map(string),
-        ctas = ctx.AS,
-        query = ctx.query,
+        ctx,
         provider = fileStorage
         )
     } else {
